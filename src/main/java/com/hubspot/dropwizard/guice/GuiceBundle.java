@@ -28,6 +28,7 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
     private DropwizardEnvironmentModule dropwizardEnvironmentModule;
     private Optional<Class<T>> configurationClass;
     private Stage stage;
+    private Bootstrap<?> bootstrap;
 
     public static class Builder<T extends Configuration> {
         private AutoConfig autoConfig;
@@ -94,11 +95,7 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
         modules.add(new JerseyModule());
         modules.add(dropwizardEnvironmentModule);
 
-        initInjector();
 
-        if (autoConfig != null) {
-            autoConfig.initialize(bootstrap, injector);
-        }
     }
 
     @SuppressFBWarnings("DM_EXIT")
@@ -113,6 +110,11 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
 
     @Override
     public void run(final T configuration, final Environment environment) {
+        initInjector();
+
+        if (autoConfig != null) {
+            autoConfig.initialize(this.bootstrap, injector);
+        }
         JerseyUtil.registerGuiceBound(injector, environment.jersey());
         JerseyUtil.registerGuiceFilter(environment);
         setEnvironment(configuration, environment);
