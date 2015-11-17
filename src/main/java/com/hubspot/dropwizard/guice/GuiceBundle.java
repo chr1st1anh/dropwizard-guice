@@ -110,6 +110,7 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
 
     @Override
     public void run(final T configuration, final Environment environment) {
+        setEnvironment(configuration, environment);
         initInjector();
 
         if (autoConfig != null) {
@@ -117,7 +118,7 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
         }
         JerseyUtil.registerGuiceBound(injector, environment.jersey());
         JerseyUtil.registerGuiceFilter(environment);
-        setEnvironment(configuration, environment);
+
 
         if (autoConfig != null) {
             autoConfig.run(environment, injector);
@@ -125,7 +126,7 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
     }
 
     @SuppressWarnings("unchecked")
-    private void setEnvironment(final T configuration, final Environment environment) {
+    public void setEnvironment(final T configuration, final Environment environment) {
         dropwizardEnvironmentModule.setEnvironmentData(configuration, environment);
     }
 
