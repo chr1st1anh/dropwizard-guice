@@ -125,7 +125,7 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
     }
 
     @SuppressWarnings("unchecked")
-    public void setEnvironment(final T configuration, final Environment environment) {
+    private void setEnvironment(final T configuration, final Environment environment) {
         dropwizardEnvironmentModule.setEnvironmentData(configuration, environment);
     }
 
