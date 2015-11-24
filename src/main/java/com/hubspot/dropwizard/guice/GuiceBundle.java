@@ -87,6 +87,7 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
 
     @Override
     public void initialize(Bootstrap<?> bootstrap) {
+        this.bootstrap = bootstrap;
         if (configurationClass.isPresent()) {
             dropwizardEnvironmentModule = new DropwizardEnvironmentModule<>(configurationClass.get());
         } else {
@@ -94,8 +95,6 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
         }
         modules.add(new JerseyModule());
         modules.add(dropwizardEnvironmentModule);
-
-
     }
 
     @SuppressFBWarnings("DM_EXIT")

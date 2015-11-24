@@ -8,7 +8,6 @@ import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -43,7 +42,6 @@ public class InjectedIntegrationTest {
         }
     }
 
-	@Ignore
     @Test
     public void shouldGetExplicitMessage() {
 
@@ -57,7 +55,6 @@ public class InjectedIntegrationTest {
         assertThat(message).isEqualTo("this DAO was bound explicitly");
     }
 
-	@Ignore
     @Test
     public void shouldGetJitMessage() {
 
@@ -70,5 +67,4 @@ public class InjectedIntegrationTest {
         // then
         assertThat(message).isEqualTo("this DAO was bound just-in-time");
     }
-
 }
